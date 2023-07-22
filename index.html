@@ -6,84 +6,63 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body onload="startGame();">
 
-  <div id='topText'>
+  <div class="header-panel">
+    <h1>Rock Paper Scissors</h1>
+  </div>
+
+  <div class = "start-block">
+    <p>Play Rock, Paper, Scissors against the computer. The first player to reach a score of 5 is the winner. Click the button to make your selection. The computer selection and round outcome will be appended to the table on the left and scores will be updated on the right.</p>
+  </div>
+  <div class = "gameContainer">
+
+    <div class = "choices gamePanel">
+      <button class = "choiceButton" id = "rockButton" choiceName="rock">Rock</button>
+      <button class = "choiceButton" id = "paperButton" choiceName="paper">Paper</button>
+      <button class = "choiceButton" id = "scissorsButton" choiceName="scissors">Scissors</button>
+    </div>
+
+    <div class = "outcomes gamePanel">
+      <div class = outcomePanel>
+        <h2>Round Outcomes</h2>
+        <table id = "outcomeTable">
+          <tr>
+            <th>Round</th>
+            <th>Computer</th>
+            <th>User</th>
+            <th>Outcome</th>
+          </tr>
+        </table>
+      </div>
+
+      <div class = "scorePanel">
+        <h2>Score</h2>
+        <div class = "scoreDisplay">
+          <div id = "computerScore" class = "scoreBlock">
+            <h3>Computer Score</h3>
+            <p class = "score"></p>
+          </div>
+          <div id = "userScore" class = "scoreBlock">
+            <h3>User Score</h3>
+            <p class = "score"></p>
+          </div>
+        </div>
+        <div class = "finalOutcome">
+        </div>
+        <button class = "resetGame">Play Again</button>
+      </div>
+    </div>
+  </div>
+    
   </div>
 
 </body>
 
-<script>
-  function playRound() {
-    const rpsChoices = ['rock', 'paper', 'scissors'];
-
-    // Get user entry and compare to array of choices
-    const userEntry = prompt("Enter rock, paper, or scissors").toLowerCase().trim();
-    const userIndex = rpsChoices.indexOf(userEntry);
-
-    let outcome;
-    if (userIndex < 0) {
-      alert('Invalid Entry');
-      outcome = playRound();
-    } else {
-      // Get random choice from computer
-      const computerIndex = Math.floor(Math.random() * 3);
-      const computerSelection = rpsChoices[computerIndex];
-
-      // Compare choices and save outcome
-      if (userEntry == computerSelection) {
-        outcome = 'tie';
-      } else if (userEntry == 'rock') {
-        outcome = computerSelection == 'scissors' ? 'win' : 'lose';
-      } else if (userEntry == 'paper') {
-        outcome = computerSelection == 'rock' ? 'win' : 'lose';
-      } else if (userEntry == 'scissors') {
-        outcome = computerSelection == 'paper' ? 'win' : 'lose';
-      }
-    }
-    return outcome;
-  }
-
-  function game(n = 5) {
-    const scoreTable = {
-      "win": 1,
-      "tie": 0,
-      "lose": -1
-    };
-
-    // Loop through games and track outcomes
-    let outcomes = [];
-    let score = 0;
-    for (let i = 0; i < n; i++) {
-      let outcome = playRound();
-      outcomes.push(outcome);
-      score = score + (scoreTable[outcome]);
-    }
-
-    // Print results to page
-    const msg = score > 0
-      ? 'You win!'
-      : score == 0
-        ? 'A tie!'
-        : 'You lose!';
-
-    const para1 = document.createElement("p");
-    const indivOut = document.createTextNode("Round Outcomes: " + outcomes);
-    para1.appendChild(indivOut);
-
-    const para2 = document.createElement("p");
-    const allOut = document.createTextNode("Overall: " + msg);
-    para2.appendChild(allOut);
-
-    const element = document.getElementById('topText');
-    element.appendChild(para1);
-    element.appendChild(para2);
-  }
-
-  game();
-
-</script>
+<script src="js.js"></script>
 
 </html>
